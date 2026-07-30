@@ -22,10 +22,69 @@
     @switch (seccionActiva()) {
       @case ('bipedo') {
         <div formGroupName="bipedo" class="seccion">
-          <h2 class="seccion__titulo">Bípedo</h2>
-          <p class="seccion__pendiente">
-            Próximamente: postura anterior, laterales y posterior, test de Adams, evaluación de pies.
+          <h2 class="seccion__titulo">Bípedo (Inicial)</h2>
+          <p class="seccion__aviso">
+            Las fotografías se recortan y anonimizan automáticamente (rostro difuminado) al guardarse.
           </p>
+
+          @for (grupo of gruposFotosBipedo; track grupo.titulo) {
+            <div class="grupo-fotos">
+              <h3 class="grupo-fotos__titulo">{{ grupo.titulo }}</h3>
+              <div class="grupo-fotos__grid">
+                @for (campo of grupo.campos; track campo.key) {
+                  <div
+                    class="foto-card"
+                    [class.foto-card--completa]="!!controlFotoBipedo(campo.key)?.value"
+                    [class.foto-card--error]="controlFotoBipedo(campo.key)?.invalid && controlFotoBipedo(campo.key)?.touched"
+                  >
+                    <div class="foto-card__encabezado">
+                      <span class="foto-card__estado" aria-hidden="true">
+                        {{ controlFotoBipedo(campo.key)?.value ? '✓' : '' }}
+                      </span>
+                      <div class="foto-card__textos">
+                        <p class="foto-card__titulo">{{ campo.titulo }}</p>
+                        <p class="foto-card__detalle">{{ campo.detalle }}</p>
+                      </div>
+                    </div>
+
+                    @if (previsualizaciones()[campo.key]; as urlPrevia) {
+                      <img class="foto-card__preview" [src]="urlPrevia" [alt]="'Vista previa: ' + campo.titulo" />
+                    } @else {
+                      <div class="foto-card__placeholder">Sin foto</div>
+                    }
+
+                    <div class="foto-card__acciones">
+                      <label class="btn-archivo" [for]="'foto-' + campo.key">
+                        {{ previsualizaciones()[campo.key] ? 'Cambiar foto' : 'Subir / capturar foto' }}
+                      </label>
+                      <input
+                        #inputArchivo
+                        type="file"
+                        [id]="'foto-' + campo.key"
+                        class="visualmente-oculto"
+                        accept="image/*"
+                        capture="environment"
+                        (change)="onFotoSeleccionada(campo.key, $event)"
+                      />
+                      @if (previsualizaciones()[campo.key]) {
+                        <button
+                          type="button"
+                          class="btn-quitar"
+                          (click)="quitarFotoBipedo(campo.key, inputArchivo)"
+                        >
+                          Quitar
+                        </button>
+                      }
+                    </div>
+
+                    @if (controlFotoBipedo(campo.key)?.invalid && controlFotoBipedo(campo.key)?.touched) {
+                      <span class="campo__error">Esta foto es obligatoria.</span>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          }
         </div>
       }
       @case ('supino') {
