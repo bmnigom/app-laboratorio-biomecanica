@@ -38,9 +38,12 @@
                     [class.foto-card--error]="controlFotoBipedo(campo.key)?.invalid && controlFotoBipedo(campo.key)?.touched"
                   >
                     <div class="foto-card__encabezado">
-                      <span class="foto-card__estado" aria-hidden="true">
-                        {{ controlFotoBipedo(campo.key)?.value ? '✓' : '' }}
-                      </span>
+                      <span
+                        class="foto-card__estado"
+                        [class.foto-card__estado--vacio]="!controlFotoBipedo(campo.key)?.value"
+                        aria-hidden="true"
+                        >@if (controlFotoBipedo(campo.key)?.value) {✓}</span
+                      >
                       <div class="foto-card__textos">
                         <p class="foto-card__titulo">{{ campo.titulo }}</p>
                         <p class="foto-card__detalle">{{ campo.detalle }}</p>
