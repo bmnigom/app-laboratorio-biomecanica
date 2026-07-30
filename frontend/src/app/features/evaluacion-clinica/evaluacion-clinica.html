@@ -1,0 +1,114 @@
+<form class="evaluacion" [formGroup]="evaluacionForm" (ngSubmit)="guardar()">
+  <header class="evaluacion__header">
+    <h1 class="evaluacion__titulo">Evaluación Clínica</h1>
+    <p class="evaluacion__subtitulo">Registro de hallazgos por posición corporal</p>
+  </header>
+
+  <nav class="evaluacion__stepper" aria-label="Secciones de la evaluación">
+    @for (seccion of secciones; track seccion.key; let i = $index) {
+      <button
+        type="button"
+        class="stepper__item"
+        [class.stepper__item--activo]="seccionActiva() === seccion.key"
+        (click)="irASeccion(seccion.key)"
+      >
+        <span class="stepper__numero">{{ i + 1 }}</span>
+        <span class="stepper__label">{{ seccion.label }}</span>
+      </button>
+    }
+  </nav>
+
+  <section class="evaluacion__contenido">
+    @switch (seccionActiva()) {
+      @case ('bipedo') {
+        <div formGroupName="bipedo" class="seccion">
+          <h2 class="seccion__titulo">Bípedo</h2>
+          <p class="seccion__pendiente">
+            Próximamente: postura anterior, laterales y posterior, test de Adams, evaluación de pies.
+          </p>
+        </div>
+      }
+      @case ('supino') {
+        <div formGroupName="supino" class="seccion">
+          <h2 class="seccion__titulo">Supino</h2>
+          <div class="seccion__grid">
+            <div class="campo">
+              <label class="campo__label" for="flexionCadera">Flexión de cadera</label>
+              <div class="campo__control">
+                <input
+                  id="flexionCadera"
+                  class="campo__input"
+                  type="number"
+                  formControlName="flexionCadera"
+                  min="0"
+                  max="180"
+                  step="1"
+                  placeholder="Ej. 120"
+                  inputmode="numeric"
+                />
+                <span class="campo__unidad">°</span>
+              </div>
+              @if (evaluacionForm.get('supino.flexionCadera')?.invalid && evaluacionForm.get('supino.flexionCadera')?.touched) {
+                <span class="campo__error">Ingrese un valor entre 0° y 180°.</span>
+              }
+            </div>
+
+            <div class="campo">
+              <label class="campo__label" for="anguloPopliteo">Ángulo poplíteo</label>
+              <div class="campo__control">
+                <input
+                  id="anguloPopliteo"
+                  class="campo__input"
+                  type="number"
+                  formControlName="anguloPopliteo"
+                  min="0"
+                  max="180"
+                  step="1"
+                  placeholder="Ej. 50"
+                  inputmode="numeric"
+                />
+                <span class="campo__unidad">°</span>
+              </div>
+              @if (evaluacionForm.get('supino.anguloPopliteo')?.invalid && evaluacionForm.get('supino.anguloPopliteo')?.touched) {
+                <span class="campo__error">Ingrese un valor entre 0° y 180°.</span>
+              }
+            </div>
+          </div>
+        </div>
+      }
+      @case ('prono') {
+        <div formGroupName="prono" class="seccion">
+          <h2 class="seccion__titulo">Prono</h2>
+          <p class="seccion__pendiente">
+            Próximamente: extensión y rotaciones de cadera, ángulo muslo-pie.
+          </p>
+        </div>
+      }
+      @case ('sedente') {
+        <div formGroupName="sedente" class="seccion">
+          <h2 class="seccion__titulo">Sedente</h2>
+          <p class="seccion__pendiente">
+            Próximamente: reflejos, fuerza muscular, escalas neurológicas.
+          </p>
+        </div>
+      }
+    }
+  </section>
+
+  <footer class="evaluacion__acciones">
+    <button
+      type="button"
+      class="btn btn--secundario"
+      (click)="anteriorSeccion()"
+      [disabled]="seccionActiva() === secciones[0].key"
+    >
+      Anterior
+    </button>
+
+    @if (seccionActiva() !== secciones[secciones.length - 1].key) {
+      <button type="button" class="btn btn--primario" (click)="siguienteSeccion()">Siguiente</button>
+    } @else {
+      <button type="submit" class="btn btn--exito">Guardar evaluación</button>
+    }
+  </footer>
+</form>

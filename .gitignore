@@ -1,0 +1,23 @@
+# Documentos clinicos reales de pacientes: nunca deben subirse al repositorio
+*.docx
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Conda / entornos
+.venv/
+venv/
+env/
+
+# IDE / editores
+.idea/
+.vscode/
+
+# Claude Code (config local del usuario)
+.claude/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

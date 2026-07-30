@@ -1,0 +1,492 @@
+{
+  "paciente": {
+    "id": "PAC-0001",
+    "nombres": "Juan Ficticio",
+    "apellidos": "Perez Prueba",
+    "fecha_nacimiento": "2016-04-12",
+    "sexo": "masculino",
+    "peso_kg": 28.5,
+    "talla_cm": 122.0,
+    "lateralidad_dominante": "derecha",
+    "diagnostico_medico": "Paralisis cerebral espastica diplejica (GMFCS II)",
+    "motivo_consulta": "Analisis de marcha para valoracion de retracciones musculares",
+    "fecha_registro": "2026-07-29",
+    "edad": 10
+  },
+  "evaluacion_clinica": {
+    "id": "EVAL-0001",
+    "paciente_id": "PAC-0001",
+    "fecha_evaluacion": "2026-07-29",
+    "evaluador": "Evaluador de Prueba",
+    "orden_captura": [
+      "bipedo_inicial",
+      "supino",
+      "prono",
+      "sedente",
+      "bipedo_final"
+    ],
+    "captura_bipedo_inicial": {
+      "foto_postura_anterior": "anonimizadas/PAC-0001_bipedo_anterior.jpg",
+      "foto_postura_lateral_derecha": "anonimizadas/PAC-0001_bipedo_lateral_der.jpg",
+      "foto_postura_lateral_izquierda": "anonimizadas/PAC-0001_bipedo_lateral_izq.jpg",
+      "foto_postura_posterior": "anonimizadas/PAC-0001_bipedo_posterior.jpg",
+      "test_adams": "negativo",
+      "foto_test_adams": "anonimizadas/PAC-0001_adams.jpg",
+      "foto_pies": "anonimizadas/PAC-0001_pies.jpg"
+    },
+    "evaluacion_supino": {
+      "flexion_cadera": {
+        "derecho": 120.0,
+        "izquierdo": 115.0
+      },
+      "abduccion_cadera_rodilla_extension": {
+        "derecho": 40.0,
+        "izquierdo": 35.0
+      },
+      "aduccion_cadera": {
+        "derecho": 25.0,
+        "izquierdo": 25.0
+      },
+      "abduccion_cadera_rodilla_flexion": {
+        "derecho": 45.0,
+        "izquierdo": 40.0
+      },
+      "test_thomas": {
+        "resultado": {
+          "derecho": "positivo",
+          "izquierdo": "positivo"
+        },
+        "angulo_grados": {
+          "derecho": 15.0,
+          "izquierdo": 20.0
+        },
+        "observaciones": "Retraccion leve de psoas iliaco bilateral, mayor a la izquierda"
+      },
+      "ashworth_aductores": {
+        "derecho": "1",
+        "izquierdo": "1+"
+      },
+      "ashworth_flexores_cadera": {
+        "derecho": "1",
+        "izquierdo": "1"
+      },
+      "fuerza_abduccion_aduccion_cadera": {
+        "derecho": "4",
+        "izquierdo": "4-"
+      },
+      "cms_cadera": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "flexion_rodilla": {
+        "derecho": 140.0,
+        "izquierdo": 138.0
+      },
+      "extension_rodilla": {
+        "derecho": -5.0,
+        "izquierdo": -8.0
+      },
+      "angulo_popliteo": {
+        "derecho": 50.0,
+        "izquierdo": 55.0
+      },
+      "angulo_popliteo_bilateral_simultaneo": 52.0,
+      "ashworth_isquiotibiales": {
+        "derecho": "1+",
+        "izquierdo": "2"
+      },
+      "ashworth_recto_femoral": {
+        "derecho": "1",
+        "izquierdo": "1+"
+      },
+      "dorsiflexion_rodilla_extendida": {
+        "derecho": 5.0,
+        "izquierdo": 0.0
+      },
+      "flexion_plantar": {
+        "derecho": 45.0,
+        "izquierdo": 45.0
+      },
+      "test_silverskiold": {
+        "derecho": "positivo",
+        "izquierdo": "positivo"
+      },
+      "ashworth_plantiflexores": {
+        "derecho": "2",
+        "izquierdo": "2"
+      },
+      "ashworth_tibial_posterior": {
+        "derecho": "1",
+        "izquierdo": "1"
+      },
+      "test_allis": {
+        "derecho": "negativo",
+        "izquierdo": "negativo"
+      },
+      "test_galeazzi": {
+        "derecho": "negativo",
+        "izquierdo": "negativo"
+      },
+      "test_ellis": {
+        "derecho": "negativo",
+        "izquierdo": "negativo"
+      },
+      "longitud_real": {
+        "derecho": 58.0,
+        "izquierdo": 58.0
+      },
+      "longitud_aparente": {
+        "derecho": 59.0,
+        "izquierdo": 58.5
+      },
+      "eje_transmaleolar": {
+        "derecho": 12.0,
+        "izquierdo": 10.0
+      },
+      "test_ober": {
+        "resultado": {
+          "derecho": "positivo",
+          "izquierdo": "negativo"
+        },
+        "angulo_grados": {
+          "derecho": 10.0,
+          "izquierdo": 2.0
+        },
+        "observaciones": "Retraccion de banda iliotibial derecha"
+      }
+    },
+    "evaluacion_prono": {
+      "extension_cadera": {
+        "derecho": 10.0,
+        "izquierdo": 8.0
+      },
+      "fuerza_extension_cadera": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "rotacion_interna_cadera": {
+        "derecho": 45.0,
+        "izquierdo": 50.0
+      },
+      "foto_rotacion_interna_cadera": "anonimizadas/PAC-0001_rot_int_cadera.jpg",
+      "rotacion_externa_cadera": {
+        "derecho": 30.0,
+        "izquierdo": 25.0
+      },
+      "foto_rotacion_externa_cadera": "anonimizadas/PAC-0001_rot_ext_cadera.jpg",
+      "anteversion_femoral_clinica": {
+        "derecho": 35.0,
+        "izquierdo": 40.0
+      },
+      "fuerza_flexion_rodilla": {
+        "derecho": "4",
+        "izquierdo": "4-"
+      },
+      "flexion_rodilla": {
+        "derecho": 130.0,
+        "izquierdo": 125.0
+      },
+      "test_ely": {
+        "resultado": {
+          "derecho": "positivo",
+          "izquierdo": "positivo"
+        },
+        "angulo_grados": {
+          "derecho": 30.0,
+          "izquierdo": 35.0
+        },
+        "observaciones": "Elevacion de cadera durante flexion de rodilla, sugiere retraccion de recto femoral"
+      },
+      "dorsiflexion_rodilla_flexionada": {
+        "derecho": 15.0,
+        "izquierdo": 10.0
+      },
+      "angulo_muslo_pie": {
+        "derecho": 10.0,
+        "izquierdo": 15.0
+      },
+      "foto_angulo_muslo_pie": "anonimizadas/PAC-0001_angulo_muslo_pie.jpg",
+      "segundo_dedo": "Sin desviaciones significativas",
+      "inversion_pie": {
+        "derecho": 20.0,
+        "izquierdo": 18.0
+      },
+      "eversion_pie": {
+        "derecho": 15.0,
+        "izquierdo": 12.0
+      }
+    },
+    "evaluacion_sedente": {
+      "clonus": {
+        "derecho": "negativo",
+        "izquierdo": "positivo"
+      },
+      "babinski": {
+        "derecho": "negativo",
+        "izquierdo": "negativo"
+      },
+      "hallazgos_rot": "Reflejos patelares y aquileos vivos, sin asimetrias significativas",
+      "estado_confusion": false,
+      "fuerza_flexion_cadera": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "fuerza_rotaciones_cadera": {
+        "derecho": "4-",
+        "izquierdo": "4-"
+      },
+      "fuerza_extension_rodilla": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "patela_alta": {
+        "derecho": "negativo",
+        "izquierdo": "negativo"
+      },
+      "extensor_lag": {
+        "derecho": 0.0,
+        "izquierdo": 5.0
+      },
+      "cms_rodilla": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "cms_tobillo": {
+        "derecho": "4-",
+        "izquierdo": "4-"
+      },
+      "cms_pie": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "cms_dedos": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "fuerza_dorsiflexion": {
+        "derecho": "3",
+        "izquierdo": "3"
+      },
+      "fuerza_inversion_eversion": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "ashworth_tono_general": {
+        "derecho": "1",
+        "izquierdo": "1+"
+      }
+    },
+    "captura_bipedo_final": {
+      "fuerza_plantiflexores": {
+        "derecho": "4",
+        "izquierdo": "3"
+      }
+    },
+    "pruebas_retraccion": {
+      "thomas": {
+        "resultado": {
+          "derecho": "positivo",
+          "izquierdo": "positivo"
+        },
+        "angulo_grados": {
+          "derecho": 15.0,
+          "izquierdo": 20.0
+        },
+        "observaciones": "Retraccion leve de psoas iliaco bilateral, mayor a la izquierda"
+      },
+      "ely": {
+        "resultado": {
+          "derecho": "positivo",
+          "izquierdo": "positivo"
+        },
+        "angulo_grados": {
+          "derecho": 30.0,
+          "izquierdo": 35.0
+        },
+        "observaciones": "Elevacion de cadera durante flexion de rodilla, sugiere retraccion de recto femoral"
+      },
+      "ober": {
+        "resultado": {
+          "derecho": "positivo",
+          "izquierdo": "negativo"
+        },
+        "angulo_grados": {
+          "derecho": 10.0,
+          "izquierdo": 2.0
+        },
+        "observaciones": "Retraccion de banda iliotibial derecha"
+      }
+    },
+    "metricas_cadera": {
+      "flexion": {
+        "derecho": 120.0,
+        "izquierdo": 115.0
+      },
+      "abduccion_rodilla_extension": {
+        "derecho": 40.0,
+        "izquierdo": 35.0
+      },
+      "aduccion": {
+        "derecho": 25.0,
+        "izquierdo": 25.0
+      },
+      "abduccion_rodilla_flexion": {
+        "derecho": 45.0,
+        "izquierdo": 40.0
+      },
+      "extension": {
+        "derecho": 10.0,
+        "izquierdo": 8.0
+      },
+      "rotacion_interna": {
+        "derecho": 45.0,
+        "izquierdo": 50.0
+      },
+      "rotacion_externa": {
+        "derecho": 30.0,
+        "izquierdo": 25.0
+      },
+      "anteversion_femoral_clinica": {
+        "derecho": 35.0,
+        "izquierdo": 40.0
+      },
+      "fuerza_flexion": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "fuerza_extension": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "fuerza_rotaciones": {
+        "derecho": "4-",
+        "izquierdo": "4-"
+      },
+      "fuerza_abduccion_aduccion": {
+        "derecho": "4",
+        "izquierdo": "4-"
+      },
+      "ashworth_aductores": {
+        "derecho": "1",
+        "izquierdo": "1+"
+      },
+      "ashworth_flexores": {
+        "derecho": "1",
+        "izquierdo": "1"
+      },
+      "cms_cadera": {
+        "derecho": "4",
+        "izquierdo": "4"
+      }
+    },
+    "metricas_rodilla": {
+      "flexion_supino": {
+        "derecho": 140.0,
+        "izquierdo": 138.0
+      },
+      "extension": {
+        "derecho": -5.0,
+        "izquierdo": -8.0
+      },
+      "angulo_popliteo": {
+        "derecho": 50.0,
+        "izquierdo": 55.0
+      },
+      "angulo_popliteo_bilateral_simultaneo": 52.0,
+      "flexion_prono": {
+        "derecho": 130.0,
+        "izquierdo": 125.0
+      },
+      "fuerza_flexion": {
+        "derecho": "4",
+        "izquierdo": "4-"
+      },
+      "fuerza_extension": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "patela_alta": {
+        "derecho": "negativo",
+        "izquierdo": "negativo"
+      },
+      "extensor_lag": {
+        "derecho": 0.0,
+        "izquierdo": 5.0
+      },
+      "cms_rodilla": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "ashworth_isquiotibiales": {
+        "derecho": "1+",
+        "izquierdo": "2"
+      },
+      "ashworth_recto_femoral": {
+        "derecho": "1",
+        "izquierdo": "1+"
+      }
+    },
+    "metricas_tobillo": {
+      "dorsiflexion_rodilla_extendida": {
+        "derecho": 5.0,
+        "izquierdo": 0.0
+      },
+      "flexion_plantar": {
+        "derecho": 45.0,
+        "izquierdo": 45.0
+      },
+      "test_silverskiold": {
+        "derecho": "positivo",
+        "izquierdo": "positivo"
+      },
+      "dorsiflexion_rodilla_flexionada": {
+        "derecho": 15.0,
+        "izquierdo": 10.0
+      },
+      "angulo_muslo_pie": {
+        "derecho": 10.0,
+        "izquierdo": 15.0
+      },
+      "inversion": {
+        "derecho": 20.0,
+        "izquierdo": 18.0
+      },
+      "eversion": {
+        "derecho": 15.0,
+        "izquierdo": 12.0
+      },
+      "fuerza_dorsiflexion": {
+        "derecho": "3",
+        "izquierdo": "3"
+      },
+      "fuerza_inversion_eversion": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "fuerza_plantiflexores": {
+        "derecho": "4",
+        "izquierdo": "3"
+      },
+      "cms_tobillo": {
+        "derecho": "4-",
+        "izquierdo": "4-"
+      },
+      "cms_pie": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "cms_dedos": {
+        "derecho": "4",
+        "izquierdo": "4"
+      },
+      "ashworth_plantiflexores": {
+        "derecho": "2",
+        "izquierdo": "2"
+      },
+      "ashworth_tibial_posterior": {
+        "derecho": "1",
+        "izquierdo": "1"
+      }
+    }
+  }
+}
