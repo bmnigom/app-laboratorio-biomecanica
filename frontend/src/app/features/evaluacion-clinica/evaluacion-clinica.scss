@@ -1,13 +1,17 @@
+// Paleta institucional Universidad CES (tomada del CSS oficial de ces.edu.co).
 :host {
-  --color-primario: #0f6e77;
-  --color-primario-oscuro: #0a4e55;
-  --color-exito: #2e7d5b;
-  --color-fondo: #f4f7f8;
+  --color-primario: #1568e0;
+  --color-primario-oscuro: #12284c;
+  --color-acento: #febc11;
+  --color-acento-oscuro: #e18d00;
+  --color-exito: #1f9563;
+  --color-exito-oscuro: #167a4e;
+  --color-fondo: #eceef2;
   --color-superficie: #ffffff;
-  --color-borde: #dbe3e5;
-  --color-texto: #1e2a2c;
-  --color-texto-suave: #5b6b6e;
-  --color-error: #c0392b;
+  --color-borde: #d7dbe3;
+  --color-texto: #12284c;
+  --color-texto-suave: #69788e;
+  --color-error: #dc3545;
   --radio: 12px;
 
   display: block;
@@ -28,6 +32,14 @@
 
 .evaluacion__header {
   text-align: center;
+  padding-bottom: 1.5rem;
+  border-bottom: 4px solid var(--color-acento);
+}
+
+.evaluacion__escudo {
+  height: 56px;
+  width: auto;
+  margin-bottom: 0.75rem;
 }
 
 .evaluacion__titulo {
@@ -363,6 +375,11 @@
     opacity: 0.4;
     cursor: not-allowed;
   }
+
+  &:focus-visible {
+    outline: 3px solid var(--color-primario);
+    outline-offset: 2px;
+  }
 }
 
 .btn--primario {
@@ -376,9 +393,14 @@
   border: 1.5px solid var(--color-borde);
 }
 
+// Réplica del botón CTA amarillo institucional (.btn-yellow en ces.edu.co).
 .btn--exito {
-  background: var(--color-exito);
-  color: #fff;
+  background: var(--color-acento);
+  color: var(--color-primario-oscuro);
+
+  &:hover {
+    background: var(--color-acento-oscuro);
+  }
 }
 
 // Pantallas de laboratorio / tablets grandes: aumentar aire y tamaños táctiles.
