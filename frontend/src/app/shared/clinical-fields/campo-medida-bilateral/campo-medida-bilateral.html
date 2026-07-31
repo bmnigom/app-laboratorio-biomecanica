@@ -1,0 +1,25 @@
+<span class="fila__etiqueta">{{ label() }}</span>
+<div class="fila__valor fila__valor--derecho">
+  <input
+    class="campo__input"
+    type="number"
+    [formControl]="derecho"
+    [min]="min()"
+    [max]="max()"
+    step="1"
+    inputmode="numeric"
+  />
+  <span class="campo__unidad">{{ unidad() }}</span>
+</div>
+<div class="fila__valor fila__valor--izquierdo">
+  <input
+    class="campo__input"
+    type="number"
+    [formControl]="izquierdo"
+    [min]="min()"
+    [max]="max()"
+    step="1"
+    inputmode="numeric"
+  />
+  <span class="campo__unidad">{{ unidad() }}</span>
+</div>

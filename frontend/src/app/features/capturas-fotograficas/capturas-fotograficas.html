@@ -1,0 +1,76 @@
+<form class="capturas" [formGroup]="capturasForm" (ngSubmit)="guardar()">
+  <header class="capturas__header">
+    <img class="capturas__escudo" src="images/escudo-ces.svg" alt="Escudo Universidad CES" />
+    <h1 class="capturas__titulo">Capturas fotográficas</h1>
+    <p class="capturas__subtitulo">Registro fotográfico independiente de la evaluación clínica</p>
+  </header>
+
+  <p class="capturas__aviso">
+    Las fotografías se recortan y anonimizan automáticamente (rostro difuminado) al guardarse. Este
+    registro genera su propio reporte en PDF, distinto del PDF de la evaluación clínica.
+  </p>
+
+  <section class="capturas__contenido">
+    @for (grupo of grupos; track grupo.titulo) {
+      <div class="grupo-fotos">
+        <h2 class="grupo-fotos__titulo">{{ grupo.titulo }}</h2>
+        <div class="grupo-fotos__grid">
+          @for (campo of grupo.campos; track campo.key) {
+            <div
+              class="foto-card"
+              [class.foto-card--completa]="!!controlFoto(campo.key)?.value"
+              [class.foto-card--error]="controlFoto(campo.key)?.invalid && controlFoto(campo.key)?.touched"
+            >
+              <div class="foto-card__encabezado">
+                <span
+                  class="foto-card__estado"
+                  [class.foto-card__estado--vacio]="!controlFoto(campo.key)?.value"
+                  aria-hidden="true"
+                  >@if (controlFoto(campo.key)?.value) {✓}</span
+                >
+                <div class="foto-card__textos">
+                  <p class="foto-card__titulo">{{ campo.titulo }}</p>
+                  <p class="foto-card__detalle">{{ campo.detalle }}</p>
+                </div>
+              </div>
+
+              @if (previsualizaciones()[campo.key]; as urlPrevia) {
+                <img class="foto-card__preview" [src]="urlPrevia" [alt]="'Vista previa: ' + campo.titulo" />
+              } @else {
+                <div class="foto-card__placeholder">Sin foto</div>
+              }
+
+              <div class="foto-card__acciones">
+                <label class="btn-archivo" [for]="'foto-' + campo.key">
+                  {{ previsualizaciones()[campo.key] ? 'Cambiar foto' : 'Subir / capturar foto' }}
+                </label>
+                <input
+                  #inputArchivo
+                  type="file"
+                  [id]="'foto-' + campo.key"
+                  class="visualmente-oculto"
+                  accept="image/*"
+                  capture="environment"
+                  (change)="onFotoSeleccionada(campo.key, $event)"
+                />
+                @if (previsualizaciones()[campo.key]) {
+                  <button type="button" class="btn-quitar" (click)="quitarFoto(campo.key, inputArchivo)">
+                    Quitar
+                  </button>
+                }
+              </div>
+
+              @if (controlFoto(campo.key)?.invalid && controlFoto(campo.key)?.touched) {
+                <span class="campo__error">Esta foto es obligatoria.</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </section>
+
+  <footer class="capturas__acciones">
+    <button type="submit" class="btn btn--exito">Guardar capturas</button>
+  </footer>
+</form>

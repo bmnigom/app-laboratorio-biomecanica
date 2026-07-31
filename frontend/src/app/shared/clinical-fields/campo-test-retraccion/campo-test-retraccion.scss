@@ -1,0 +1,40 @@
+.test-retraccion {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 1.1rem 1.1rem;
+  border: 1.5px solid var(--color-borde);
+  border-radius: var(--radio, 12px);
+  background: var(--color-superficie);
+  margin: 0;
+}
+
+.test-retraccion__titulo {
+  padding: 0 0.35rem;
+  font-weight: 600;
+  color: var(--color-primario-oscuro);
+}
+
+.test-retraccion__grid {
+  display: grid;
+  grid-template-columns: minmax(140px, 1.2fr) 1fr 1fr;
+  align-items: center;
+  column-gap: 1rem;
+}
+
+.test-retraccion__encabezado {
+  padding-bottom: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-texto-suave);
+}
+
+.test-retraccion__encabezado--derecho {
+  color: var(--color-exito);
+}
+
+.test-retraccion__encabezado--izquierdo {
+  color: var(--color-error);
+}

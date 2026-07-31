@@ -1,0 +1,59 @@
+.fila__etiqueta {
+  padding: 0.55rem 0.5rem 0.55rem 0;
+  font-size: 0.92rem;
+  color: var(--color-texto);
+  border-bottom: 1px solid var(--color-borde);
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.fila__valor {
+  padding: 0.4rem 0 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--color-borde);
+  border-left: 3px solid transparent;
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+}
+
+// Derecho = verde, izquierdo = rojo (convención del laboratorio), para reducir
+// el riesgo de digitar un valor en el lado equivocado.
+.fila__valor--derecho {
+  border-left-color: var(--color-exito);
+}
+
+.fila__valor--izquierdo {
+  border-left-color: var(--color-error);
+}
+
+.campo__input {
+  flex: 1;
+  min-width: 0;
+  border: 1.5px solid var(--color-borde);
+  border-radius: 8px 0 0 8px;
+  background: var(--color-fondo);
+  padding: 0.45rem 0.6rem;
+  font-size: 0.95rem;
+  color: var(--color-texto);
+  border-right: none;
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 3px rgba(15, 110, 119, 0.15);
+  }
+}
+
+.campo__unidad {
+  display: flex;
+  align-items: center;
+  padding: 0 0.6rem;
+  color: var(--color-texto-suave);
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: 1.5px solid var(--color-borde);
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  background: var(--color-fondo);
+}

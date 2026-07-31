@@ -20,139 +20,581 @@
   </nav>
 
   <section class="evaluacion__contenido">
+    @if (subseccionesPorSeccion[seccionActiva()].length) {
+      <nav class="subseccion-nav" aria-label="Subsecciones">
+        @for (sub of subseccionesPorSeccion[seccionActiva()]; track sub.id) {
+          <button type="button" class="subseccion-nav__chip" (click)="irASubseccion(sub.id)">{{ sub.label }}</button>
+        }
+      </nav>
+    }
+
     @switch (seccionActiva()) {
-      @case ('bipedo') {
-        <div formGroupName="bipedo" class="seccion">
-          <h2 class="seccion__titulo">Bípedo (Inicial)</h2>
-          <p class="seccion__aviso">
-            Las fotografías se recortan y anonimizan automáticamente (rostro difuminado) al guardarse.
-          </p>
+      @case ('paciente') {
+        <div formGroupName="paciente" class="seccion">
+          <h2 class="seccion__titulo">Paciente</h2>
 
-          @for (grupo of gruposFotosBipedo; track grupo.titulo) {
-            <div class="grupo-fotos">
-              <h3 class="grupo-fotos__titulo">{{ grupo.titulo }}</h3>
-              <div class="grupo-fotos__grid">
-                @for (campo of grupo.campos; track campo.key) {
-                  <div
-                    class="foto-card"
-                    [class.foto-card--completa]="!!controlFotoBipedo(campo.key)?.value"
-                    [class.foto-card--error]="controlFotoBipedo(campo.key)?.invalid && controlFotoBipedo(campo.key)?.touched"
-                  >
-                    <div class="foto-card__encabezado">
-                      <span
-                        class="foto-card__estado"
-                        [class.foto-card__estado--vacio]="!controlFotoBipedo(campo.key)?.value"
-                        aria-hidden="true"
-                        >@if (controlFotoBipedo(campo.key)?.value) {✓}</span
-                      >
-                      <div class="foto-card__textos">
-                        <p class="foto-card__titulo">{{ campo.titulo }}</p>
-                        <p class="foto-card__detalle">{{ campo.detalle }}</p>
-                      </div>
-                    </div>
-
-                    @if (previsualizaciones()[campo.key]; as urlPrevia) {
-                      <img class="foto-card__preview" [src]="urlPrevia" [alt]="'Vista previa: ' + campo.titulo" />
-                    } @else {
-                      <div class="foto-card__placeholder">Sin foto</div>
-                    }
-
-                    <div class="foto-card__acciones">
-                      <label class="btn-archivo" [for]="'foto-' + campo.key">
-                        {{ previsualizaciones()[campo.key] ? 'Cambiar foto' : 'Subir / capturar foto' }}
-                      </label>
-                      <input
-                        #inputArchivo
-                        type="file"
-                        [id]="'foto-' + campo.key"
-                        class="visualmente-oculto"
-                        accept="image/*"
-                        capture="environment"
-                        (change)="onFotoSeleccionada(campo.key, $event)"
-                      />
-                      @if (previsualizaciones()[campo.key]) {
-                        <button
-                          type="button"
-                          class="btn-quitar"
-                          (click)="quitarFotoBipedo(campo.key, inputArchivo)"
-                        >
-                          Quitar
-                        </button>
-                      }
-                    </div>
-
-                    @if (controlFotoBipedo(campo.key)?.invalid && controlFotoBipedo(campo.key)?.touched) {
-                      <span class="campo__error">Esta foto es obligatoria.</span>
-                    }
-                  </div>
-                }
-              </div>
+          <h3 class="subseccion__titulo" id="paciente-identificacion">Identificación</h3>
+          <div class="paciente-grid">
+            <label class="campo campo--completo">
+              <span class="campo__label">Nombre</span>
+              <input class="campo__input-texto" type="text" formControlName="nombre" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Sexo</span>
+              <select class="campo__select" formControlName="sexo">
+                <option value="">Sin dato</option>
+                <option value="masculino">Masculino</option>
+                <option value="femenino">Femenino</option>
+                <option value="otro">Otro</option>
+              </select>
+            </label>
+            <label class="campo">
+              <span class="campo__label">Fecha de nacimiento</span>
+              <input class="campo__input-texto" type="date" formControlName="fecha_nacimiento" />
+            </label>
+            <div class="campo">
+              <span class="campo__label">Edad <span class="campo__label-nota">(automática)</span></span>
+              <div class="campo__valor-calculado">{{ formatoEdad() }}</div>
             </div>
-          }
+            <label class="campo">
+              <span class="campo__label">Fecha del estudio</span>
+              <input class="campo__input-texto" type="date" formControlName="fecha_estudio" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Identificación</span>
+              <input class="campo__input-texto" type="text" formControlName="identificacion" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Médico remitente</span>
+              <input class="campo__input-texto" type="text" formControlName="medico_remitente" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Dirección de la residencia</span>
+              <input class="campo__input-texto" type="text" formControlName="direccion_residencia" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Teléfono</span>
+              <input class="campo__input-texto" type="text" formControlName="telefono" placeholder="Ej. 300 000 0000" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Estrato</span>
+              <input class="campo__input-texto" type="text" formControlName="estrato" placeholder="1 a 6" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Ocupación</span>
+              <input class="campo__input-texto" type="text" formControlName="ocupacion" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Escolaridad</span>
+              <input class="campo__input-texto" type="text" formControlName="escolaridad" placeholder="Ej. Primaria, bachillerato" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Grado</span>
+              <input class="campo__input-texto" type="text" formControlName="grado" placeholder="Ej. 5°" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Seguridad social</span>
+              <input class="campo__input-texto" type="text" formControlName="seguridad_social" />
+            </label>
+          </div>
+
+          <h3 class="subseccion__titulo" id="paciente-diagnostico">Diagnóstico</h3>
+          <div class="paciente-grid">
+            <label class="campo">
+              <span class="campo__label">Diagnóstico</span>
+              <input class="campo__input-texto" type="text" formControlName="diagnostico" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Procedimiento propuesto</span>
+              <input class="campo__input-texto" type="text" formControlName="procedimiento_propuesto" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Compromiso topográfico</span>
+              <input class="campo__input-texto" type="text" formControlName="compromiso_topografico" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Tipo de tono</span>
+              <input class="campo__input-texto" type="text" formControlName="tipo_tono" />
+            </label>
+          </div>
+
+          <h3 class="subseccion__titulo" id="paciente-perinatal">Antecedentes perinatales</h3>
+          <div class="paciente-grid">
+            <label class="campo">
+              <span class="campo__label">Tipo de parto</span>
+              <input class="campo__input-texto" type="text" formControlName="tipo_parto" placeholder="Ej. Cesárea, vaginal" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Semanas de embarazo</span>
+              <input class="campo__input-texto" type="text" formControlName="semanas_embarazo" placeholder="Ej. 38" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Permanencia en UCI</span>
+              <input class="campo__input-texto" type="text" formControlName="permanencia_uci" placeholder="Ej. Sí, 1 mes" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Peso al nacer</span>
+              <input class="campo__input-texto" type="text" formControlName="peso_nacer" placeholder="Ej. 3200 g" />
+            </label>
+          </div>
+
+          <h3 class="subseccion__titulo" id="paciente-desarrollo">Desarrollo psicomotor</h3>
+          <p class="seccion__aviso">Edad de logro de cada hito (ej. "4 meses", "18 meses").</p>
+          <div class="paciente-grid">
+            <label class="campo">
+              <span class="campo__label">Control de cabeza</span>
+              <input class="campo__input-texto" type="text" formControlName="control_cabeza" placeholder="Ej. 4 meses" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Rolados</span>
+              <input class="campo__input-texto" type="text" formControlName="rolados" placeholder="Ej. 6 meses" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Sedestación</span>
+              <input class="campo__input-texto" type="text" formControlName="sedestacion" placeholder="Ej. 8 meses" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Gateo</span>
+              <input class="campo__input-texto" type="text" formControlName="gateo" placeholder="Ej. 10 meses" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Marcha</span>
+              <input class="campo__input-texto" type="text" formControlName="marcha" placeholder="Ej. 18 meses" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Actividad física / Ejercicio</span>
+              <input class="campo__input-texto" type="text" formControlName="actividad_fisica" />
+            </label>
+          </div>
+
+          <h3 class="subseccion__titulo" id="paciente-antecedentes">Antecedentes médicos</h3>
+          <div class="paciente-grid">
+            <label class="campo campo--completo">
+              <span class="campo__label">Antecedentes terapéuticos</span>
+              <textarea class="campo__textarea" formControlName="antecedentes_terapeuticos" rows="2"></textarea>
+            </label>
+            <label class="campo campo--completo">
+              <span class="campo__label">Antecedentes traumáticos</span>
+              <textarea class="campo__textarea" formControlName="antecedentes_traumaticos" rows="2"></textarea>
+            </label>
+            <label class="campo campo--completo">
+              <span class="campo__label">Antecedentes patológicos</span>
+              <textarea class="campo__textarea" formControlName="antecedentes_patologicos" rows="2"></textarea>
+            </label>
+            <label class="campo campo--completo">
+              <span class="campo__label">Antecedentes quirúrgicos</span>
+              <textarea class="campo__textarea" formControlName="antecedentes_quirurgicos" rows="2"></textarea>
+            </label>
+            <label class="campo campo--completo">
+              <span class="campo__label">Antecedentes quirúrgicos ortopédicos</span>
+              <textarea class="campo__textarea" formControlName="antecedentes_quirurgicos_ortopedicos" rows="2"></textarea>
+            </label>
+            <label class="campo">
+              <span class="campo__label">Antecedentes tóxicos</span>
+              <input class="campo__input-texto" type="text" formControlName="antecedentes_toxicos" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Antecedentes familiares</span>
+              <input class="campo__input-texto" type="text" formControlName="antecedentes_familiares" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Alergias</span>
+              <input class="campo__input-texto" type="text" formControlName="alergias" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Convulsiones</span>
+              <input class="campo__input-texto" type="text" formControlName="convulsiones" />
+            </label>
+            <label class="campo campo--completo">
+              <span class="campo__label">Problemas asociados</span>
+              <textarea class="campo__textarea" formControlName="problemas_asociados" rows="2"></textarea>
+            </label>
+            <label class="campo">
+              <span class="campo__label">Lenguaje</span>
+              <input class="campo__input-texto" type="text" formControlName="lenguaje" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Lateralidad</span>
+              <select class="campo__select" formControlName="lateralidad">
+                <option value="">Sin dato</option>
+                <option value="derecha">Derecha</option>
+                <option value="izquierda">Izquierda</option>
+                <option value="ambidiestro">Ambidiestro</option>
+              </select>
+            </label>
+          </div>
+
+          <h3 class="subseccion__titulo" id="paciente-tratamientos">Tratamientos y ayudas</h3>
+          <div class="paciente-grid">
+            <label class="campo">
+              <span class="campo__label">Medicamentos</span>
+              <input class="campo__input-texto" type="text" formControlName="medicamentos" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Toxina botulínica</span>
+              <input class="campo__input-texto" type="text" formControlName="toxina_botulinica" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Yesos</span>
+              <input class="campo__input-texto" type="text" formControlName="yesos" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Órtesis</span>
+              <input class="campo__input-texto" type="text" formControlName="ortesis" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Bastones</span>
+              <input class="campo__input-texto" type="text" formControlName="bastones" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Caminador</span>
+              <input class="campo__input-texto" type="text" formControlName="caminador" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Silla de ruedas</span>
+              <input class="campo__input-texto" type="text" formControlName="silla_ruedas" />
+            </label>
+          </div>
+
+          <h3 class="subseccion__titulo" id="paciente-imagenes">Imágenes diagnósticas</h3>
+          <div class="paciente-grid">
+            <label class="campo">
+              <span class="campo__label">Radiografías</span>
+              <input class="campo__input-texto" type="text" formControlName="radiografias" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">TAC</span>
+              <input class="campo__input-texto" type="text" formControlName="tac" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">RMN</span>
+              <input class="campo__input-texto" type="text" formControlName="rmn" />
+            </label>
+          </div>
+
+          <h3 class="subseccion__titulo" id="paciente-otros">Otros</h3>
+          <div class="paciente-grid">
+            <label class="campo">
+              <span class="campo__label">Miembros superiores</span>
+              <input class="campo__input-texto" type="text" formControlName="miembros_superiores" />
+            </label>
+            <label class="campo">
+              <span class="campo__label">Lugar que ocupa en la familia</span>
+              <input class="campo__input-texto" type="text" formControlName="lugar_familia" />
+            </label>
+            <label class="campo campo--completo">
+              <span class="campo__label">Observaciones</span>
+              <textarea class="campo__textarea" formControlName="observaciones" rows="2"></textarea>
+            </label>
+          </div>
         </div>
       }
       @case ('supino') {
         <div formGroupName="supino" class="seccion">
           <h2 class="seccion__titulo">Supino</h2>
-          <div class="seccion__grid">
-            <div class="campo">
-              <label class="campo__label" for="flexionCadera">Flexión de cadera</label>
-              <div class="campo__control">
-                <input
-                  id="flexionCadera"
-                  class="campo__input"
-                  type="number"
-                  formControlName="flexionCadera"
-                  min="0"
-                  max="180"
-                  step="1"
-                  placeholder="Ej. 120"
-                  inputmode="numeric"
-                />
-                <span class="campo__unidad">°</span>
-              </div>
-              @if (evaluacionForm.get('supino.flexionCadera')?.invalid && evaluacionForm.get('supino.flexionCadera')?.touched) {
-                <span class="campo__error">Ingrese un valor entre 0° y 180°.</span>
-              }
+          <p class="seccion__aviso">
+            El orden de los campos respeta la secuencia en que se deben tomar las pruebas
+            (docs/clinico/lista.docx), no está agrupado por articulación.
+          </p>
+
+          <div class="tabla-bilateral">
+            <span class="tabla-bilateral__encabezado"></span>
+            <span class="tabla-bilateral__encabezado tabla-bilateral__encabezado--derecho">Derecho</span>
+            <span class="tabla-bilateral__encabezado tabla-bilateral__encabezado--izquierdo">Izquierdo</span>
+
+            <app-campo-medida-bilateral [grupo]="grupoDe('supino.flexion_cadera')" label="Flexión de cadera" />
+            <app-campo-medida-bilateral
+              [grupo]="grupoDe('supino.abduccion_cadera_rodilla_extension')"
+              label="Abducción de cadera (rodilla en extensión)"
+            />
+            <app-campo-medida-bilateral [grupo]="grupoDe('supino.aduccion_cadera')" label="Aducción de cadera" />
+            <app-campo-medida-bilateral
+              [grupo]="grupoDe('supino.abduccion_cadera_rodilla_flexion')"
+              label="Abducción de cadera (rodilla en flexión)"
+            />
+            <app-campo-medida-bilateral [grupo]="grupoDe('supino.flexion_rodilla')" label="Flexión de rodilla" />
+            <app-campo-medida-bilateral [grupo]="grupoDe('supino.extension_rodilla')" label="Extensión de rodilla" />
+            <app-campo-medida-bilateral [grupo]="grupoDe('supino.angulo_popliteo')" label="Ángulo poplíteo" />
+            <app-campo-medida-bilateral
+              [grupo]="grupoDe('supino.angulo_popliteo_bilateral')"
+              label="Ángulo poplíteo bilateral"
+            />
+
+            <span class="fila__etiqueta">Hamstring shift <span class="campo__label-nota">(automático)</span></span>
+            <div class="fila__valor fila__valor--derecho">
+              <div class="campo__valor-calculado">{{ formatoHamstringShift('derecho') }}</div>
+            </div>
+            <div class="fila__valor fila__valor--izquierdo">
+              <div class="campo__valor-calculado">{{ formatoHamstringShift('izquierdo') }}</div>
             </div>
 
-            <div class="campo">
-              <label class="campo__label" for="anguloPopliteo">Ángulo poplíteo</label>
-              <div class="campo__control">
-                <input
-                  id="anguloPopliteo"
-                  class="campo__input"
-                  type="number"
-                  formControlName="anguloPopliteo"
-                  min="0"
-                  max="180"
-                  step="1"
-                  placeholder="Ej. 50"
-                  inputmode="numeric"
-                />
-                <span class="campo__unidad">°</span>
-              </div>
-              @if (evaluacionForm.get('supino.anguloPopliteo')?.invalid && evaluacionForm.get('supino.anguloPopliteo')?.touched) {
-                <span class="campo__error">Ingrese un valor entre 0° y 180°.</span>
-              }
-            </div>
+            <app-campo-medida-bilateral
+              [grupo]="grupoDe('supino.dorsiflexion_rodilla_extendida')"
+              label="Dorsiflexión (rodilla en extensión)"
+            />
+            <app-campo-medida-bilateral [grupo]="grupoDe('supino.flexion_plantar')" label="Flexión plantar" />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('supino.test_silverskiold')"
+              label="Test de Silverskiöld"
+              [opciones]="opcionesSigno"
+            />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('supino.test_allis_galeazzi')"
+              label="Test de Allis-Galeazzi"
+              [opciones]="opcionesSigno"
+            />
+            <app-campo-select-bilateral [grupo]="grupoDe('supino.test_ellis')" label="Test de Ellis" [opciones]="opcionesSigno" />
+            <app-campo-medida-bilateral
+              [grupo]="grupoDe('supino.longitud_real')"
+              label="Longitud real"
+              unidad="cm"
+              [min]="0"
+              [max]="120"
+            />
+            <app-campo-medida-bilateral
+              [grupo]="grupoDe('supino.longitud_aparente')"
+              label="Longitud aparente"
+              unidad="cm"
+              [min]="0"
+              [max]="120"
+            />
+            <app-campo-medida-bilateral [grupo]="grupoDe('supino.eje_transmaleolar')" label="Eje transmaleolar" />
+          </div>
+
+          <app-campo-test-retraccion [grupo]="grupoDe('supino.test_thomas')" label="Test de Thomas" />
+
+          <div class="tabla-bilateral">
+            <span class="tabla-bilateral__encabezado"></span>
+            <span class="tabla-bilateral__encabezado tabla-bilateral__encabezado--derecho">Derecho</span>
+            <span class="tabla-bilateral__encabezado tabla-bilateral__encabezado--izquierdo">Izquierdo</span>
+
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('supino.ashworth_aductores')"
+              label="Ashworth aductores"
+              [opciones]="opcionesAshworth"
+            />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('supino.ashworth_isquiotibiales')"
+              label="Ashworth isquiotibiales"
+              [opciones]="opcionesAshworth"
+            />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('supino.ashworth_recto_femoral')"
+              label="Ashworth recto femoral"
+              [opciones]="opcionesAshworth"
+            />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('supino.ashworth_plantiflexores')"
+              label="Ashworth plantiflexores"
+              [opciones]="opcionesAshworth"
+            />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('supino.ashworth_tibial_posterior')"
+              label="Ashworth tibial posterior"
+              [opciones]="opcionesAshworth"
+            />
+
+            <!-- Decúbito lateral: el paciente se reposiciona de lado para el test de Ober. -->
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('supino.test_ober')"
+              label="Test de Ober (decúbito lateral)"
+              [opciones]="opcionesSigno"
+            />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('supino.fuerza_abduccion_aduccion_cadera')"
+              label="Fuerza abducción / aducción cadera"
+              [opciones]="opcionesFuerza"
+            />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('supino.cms_cadera')"
+              label="CMS (control motor selectivo) cadera"
+              [opciones]="opcionesFuerza"
+            />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('supino.ashworth_flexores_cadera')"
+              label="Ashworth flexores de cadera"
+              [opciones]="opcionesAshworth"
+            />
+          </div>
+
+          <div class="paciente-grid">
+            <label class="campo campo--completo">
+              <span class="campo__label">Comentarios — Cadera</span>
+              <textarea class="campo__textarea" formControlName="comentarios_cadera" rows="2"></textarea>
+            </label>
+            <label class="campo campo--completo">
+              <span class="campo__label">Comentarios — Rodilla</span>
+              <textarea class="campo__textarea" formControlName="comentarios_rodilla" rows="2"></textarea>
+            </label>
+            <label class="campo campo--completo">
+              <span class="campo__label">Comentarios — Tobillo / pie</span>
+              <textarea class="campo__textarea" formControlName="comentarios_tobillo" rows="2"></textarea>
+            </label>
           </div>
         </div>
       }
       @case ('prono') {
         <div formGroupName="prono" class="seccion">
           <h2 class="seccion__titulo">Prono</h2>
-          <p class="seccion__pendiente">
-            Próximamente: extensión y rotaciones de cadera, ángulo muslo-pie.
+          <p class="seccion__aviso">
+            Las fotos de rotación interna, rotación externa de cadera y ángulo muslo-pie se registran en el
+            módulo <a routerLink="/capturas-fotograficas">Capturas fotográficas</a>.
           </p>
+
+          <div class="tabla-bilateral">
+            <span class="tabla-bilateral__encabezado"></span>
+            <span class="tabla-bilateral__encabezado tabla-bilateral__encabezado--derecho">Derecho</span>
+            <span class="tabla-bilateral__encabezado tabla-bilateral__encabezado--izquierdo">Izquierdo</span>
+
+            <app-campo-medida-bilateral [grupo]="grupoDe('prono.extension_cadera')" label="Extensión de cadera" />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('prono.fuerza_extension_cadera')"
+              label="Fuerza extensión de cadera"
+              [opciones]="opcionesFuerza"
+            />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('prono.fuerza_flexion_rodilla')"
+              label="Fuerza flexión de rodilla"
+              [opciones]="opcionesFuerza"
+            />
+            <app-campo-medida-bilateral [grupo]="grupoDe('prono.flexion_rodilla')" label="Flexión de rodilla" />
+            <app-campo-medida-bilateral
+              [grupo]="grupoDe('prono.rotacion_interna_cadera')"
+              label="Rotación interna de cadera"
+            />
+            <app-campo-medida-bilateral
+              [grupo]="grupoDe('prono.rotacion_externa_cadera')"
+              label="Rotación externa de cadera"
+            />
+            <app-campo-medida-bilateral
+              [grupo]="grupoDe('prono.anteversion_femoral_clinica')"
+              label="Anteversión femoral clínica"
+            />
+          </div>
+          <app-campo-test-retraccion [grupo]="grupoDe('prono.test_ely.retraccion')" label="Test de Ely — Retracción" />
+          <app-campo-test-retraccion [grupo]="grupoDe('prono.test_ely.tono')" label="Test de Ely — Tono / espasticidad" />
+          <div class="tabla-bilateral">
+            <span class="tabla-bilateral__encabezado"></span>
+            <span class="tabla-bilateral__encabezado tabla-bilateral__encabezado--derecho">Derecho</span>
+            <span class="tabla-bilateral__encabezado tabla-bilateral__encabezado--izquierdo">Izquierdo</span>
+
+            <app-campo-medida-bilateral
+              [grupo]="grupoDe('prono.dorsiflexion_rodilla_flexionada')"
+              label="Dorsiflexión (rodilla en flexión)"
+            />
+            <app-campo-medida-bilateral [grupo]="grupoDe('prono.angulo_muslo_pie')" label="Ángulo muslo-pie" />
+            <app-campo-texto [control]="controlDe('prono.segundo_dedo')" label="Segundo dedo" />
+            <app-campo-medida-bilateral [grupo]="grupoDe('prono.inversion_pie')" label="Inversión de pie" />
+            <app-campo-medida-bilateral [grupo]="grupoDe('prono.eversion_pie')" label="Eversión de pie" />
+          </div>
+
+          <div class="paciente-grid">
+            <label class="campo campo--completo">
+              <span class="campo__label">Comentarios</span>
+              <textarea class="campo__textarea" formControlName="comentarios" rows="2"></textarea>
+            </label>
+          </div>
         </div>
       }
       @case ('sedente') {
         <div formGroupName="sedente" class="seccion">
           <h2 class="seccion__titulo">Sedente</h2>
-          <p class="seccion__pendiente">
-            Próximamente: reflejos, fuerza muscular, escalas neurológicas.
+
+          <h3 class="subseccion__titulo" id="sedente-neurologico">Neurológico</h3>
+          <div class="tabla-bilateral">
+            <span class="tabla-bilateral__encabezado"></span>
+            <span class="tabla-bilateral__encabezado tabla-bilateral__encabezado--derecho">Derecho</span>
+            <span class="tabla-bilateral__encabezado tabla-bilateral__encabezado--izquierdo">Izquierdo</span>
+
+            <app-campo-select-bilateral [grupo]="grupoDe('sedente.rot_patelar')" label="ROT patelar" [opciones]="opcionesRot" />
+            <app-campo-select-bilateral [grupo]="grupoDe('sedente.rot_aquiles')" label="ROT aquiliano" [opciones]="opcionesRot" />
+            <app-campo-select-bilateral [grupo]="grupoDe('sedente.clonus')" label="Clonus" [opciones]="opcionesSigno" />
+            <app-campo-select-bilateral [grupo]="grupoDe('sedente.babinski')" label="Babinski" [opciones]="opcionesSigno" />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('sedente.test_confusion')"
+              label="Test de confusión"
+              [opciones]="opcionesSigno"
+            />
+          </div>
+
+          <h3 class="subseccion__titulo" id="sedente-fuerza">Fuerza y tono</h3>
+          <div class="tabla-bilateral">
+            <span class="tabla-bilateral__encabezado"></span>
+            <span class="tabla-bilateral__encabezado tabla-bilateral__encabezado--derecho">Derecho</span>
+            <span class="tabla-bilateral__encabezado tabla-bilateral__encabezado--izquierdo">Izquierdo</span>
+
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('sedente.fuerza_flexion_cadera')"
+              label="Fuerza flexión de cadera"
+              [opciones]="opcionesFuerza"
+            />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('sedente.fuerza_extension_rodilla')"
+              label="Fuerza extensión de rodilla"
+              [opciones]="opcionesFuerza"
+            />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('sedente.fuerza_rotaciones_cadera')"
+              label="Fuerza rotaciones de cadera"
+              [opciones]="opcionesFuerza"
+            />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('sedente.patela_alta')"
+              label="Patela alta"
+              [opciones]="opcionesSigno"
+            />
+            <app-campo-medida-bilateral [grupo]="grupoDe('sedente.extensor_lag')" label="Extensor lag" />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('sedente.cms_rodilla')"
+              label="CMS rodilla"
+              [opciones]="opcionesFuerza"
+            />
+            <app-campo-select-bilateral [grupo]="grupoDe('sedente.cms_tobillo')" label="CMS tobillo" [opciones]="opcionesFuerza" />
+            <app-campo-select-bilateral [grupo]="grupoDe('sedente.cms_pie')" label="CMS pie" [opciones]="opcionesFuerza" />
+            <app-campo-select-bilateral [grupo]="grupoDe('sedente.cms_dedos')" label="CMS dedos" [opciones]="opcionesFuerza" />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('sedente.fuerza_dorsiflexion')"
+              label="Fuerza dorsiflexión"
+              [opciones]="opcionesFuerza"
+            />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('sedente.fuerza_inversion_eversion')"
+              label="Fuerza inversión / eversión"
+              [opciones]="opcionesFuerza"
+            />
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('sedente.ashworth_tono_general')"
+              label="Ashworth tono general"
+              [opciones]="opcionesAshworth"
+            />
+          </div>
+
+          <div class="paciente-grid">
+            <label class="campo campo--completo">
+              <span class="campo__label">Comentarios</span>
+              <textarea class="campo__textarea" formControlName="comentarios" rows="2"></textarea>
+            </label>
+          </div>
+        </div>
+      }
+      @case ('bipedo') {
+        <div formGroupName="bipedo" class="seccion">
+          <h2 class="seccion__titulo">Bípedo</h2>
+          <p class="seccion__aviso">
+            La captura fotográfica (postura, test de Adams, pies) se registra en el módulo
+            <a routerLink="/capturas-fotograficas">Capturas fotográficas</a>.
           </p>
+          <div class="tabla-bilateral">
+            <span class="tabla-bilateral__encabezado"></span>
+            <span class="tabla-bilateral__encabezado tabla-bilateral__encabezado--derecho">Derecho</span>
+            <span class="tabla-bilateral__encabezado tabla-bilateral__encabezado--izquierdo">Izquierdo</span>
+
+            <app-campo-select-bilateral
+              [grupo]="grupoDe('bipedo.fuerza_plantiflexores')"
+              label="Fuerza plantiflexores"
+              [opciones]="opcionesFuerza"
+            />
+          </div>
         </div>
       }
     }

@@ -1,0 +1,17 @@
+<span class="fila__etiqueta">{{ label() }}</span>
+<div class="fila__valor fila__valor--derecho">
+  <select class="campo__select" [formControl]="derecho">
+    <option value="">Sin dato</option>
+    @for (opcion of opciones(); track opcion.value) {
+      <option [value]="opcion.value">{{ opcion.label }}</option>
+    }
+  </select>
+</div>
+<div class="fila__valor fila__valor--izquierdo">
+  <select class="campo__select" [formControl]="izquierdo">
+    <option value="">Sin dato</option>
+    @for (opcion of opciones(); track opcion.value) {
+      <option [value]="opcion.value">{{ opcion.label }}</option>
+    }
+  </select>
+</div>

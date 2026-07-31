@@ -1,0 +1,33 @@
+:host {
+  display: block;
+  min-height: 100%;
+}
+
+.app-nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #12284c;
+}
+
+.app-nav__link {
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  &--activo {
+    color: #fff;
+    background: #1568e0;
+  }
+}

@@ -1,0 +1,12 @@
+<fieldset class="test-retraccion">
+  <legend class="test-retraccion__titulo">{{ label() }}</legend>
+
+  <div class="test-retraccion__grid">
+    <span class="test-retraccion__encabezado"></span>
+    <span class="test-retraccion__encabezado test-retraccion__encabezado--derecho">Derecho</span>
+    <span class="test-retraccion__encabezado test-retraccion__encabezado--izquierdo">Izquierdo</span>
+
+    <app-campo-select-bilateral [grupo]="resultado" label="Resultado" [opciones]="opcionesSigno" />
+    <app-campo-medida-bilateral [grupo]="anguloGrados" label="Ángulo" />
+  </div>
+</fieldset>

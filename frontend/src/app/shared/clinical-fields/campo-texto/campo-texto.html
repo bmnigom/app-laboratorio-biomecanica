@@ -1,0 +1,8 @@
+<span class="fila__etiqueta">{{ label() }}</span>
+<div class="fila__valor fila__valor--completo">
+  @if (multilinea()) {
+    <textarea class="campo__textarea" [formControl]="control()" rows="1"></textarea>
+  } @else {
+    <input class="campo__input-texto" type="text" [formControl]="control()" />
+  }
+</div>
